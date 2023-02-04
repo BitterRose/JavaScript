@@ -26,15 +26,21 @@ const stopBtn = document.querySelector('#stop');
 const playBtn = document.querySelector('#play');
 let recordedChunks = [];
 let mediaRecorder;
-let audio;
+let audioBlob;
 
 recordBtn.addEventListener('click', startRecording);
 stopBtn.addEventListener('click', stopRecording);
 playBtn.addEventListener('click', playRecording);
 
-function startRecording() {
+navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+  .then(stream => {
+    startRecording(stream);
+  })
+
+
+function startRecording(stream) {
   recordedChunks = [];
-  const options = {mimeType: 'audio/webm;codecs=vp9'};
+  const options = {mimeType: 'audio/webm;codecs=opus'};
   mediaRecorder = new MediaRecorder(stream, options);
   mediaRecorder.start();
   mediaRecorder.addEventListener('dataavailable', (e) => {
@@ -44,11 +50,11 @@ function startRecording() {
 
 function stopRecording() {
   mediaRecorder.stop();
-  const audioBlob = new Blob(recordedChunks);
-  const audioUrl = URL.createObjectURL(audioBlob);
-  audio = new Audio(audioUrl);
+  audioBlob = new Blob(recordedChunks);
 }
 
 function playRecording() {
+  const audioUrl = URL.createObjectURL(audioBlob);
+  const audio = new Audio(audioUrl);
   audio.play();
 }
