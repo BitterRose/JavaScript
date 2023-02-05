@@ -20,41 +20,48 @@ const sounds = [
 }
 
 //Recorder1
+const display = document.querySelector('.display')
 
 const recordBtn = document.querySelector('#record');
 const stopBtn = document.querySelector('#stop');
-const playBtn = document.querySelector('#play');
-let recordedChunks = [];
-let mediaRecorder;
-let audioBlob;
+
+let mediaRecorder, chunks = [], audioURL = ''
 
 recordBtn.addEventListener('click', startRecording);
 stopBtn.addEventListener('click', stopRecording);
-playBtn.addEventListener('click', playRecording);
-
-navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-  .then(stream => {
-    startRecording(stream);
-  })
 
 
-function startRecording(stream) {
-  recordedChunks = [];
-  const options = {mimeType: 'audio/webm;codecs=opus'};
-  mediaRecorder = new MediaRecorder(stream, options);
-  mediaRecorder.start();
-  mediaRecorder.addEventListener('dataavailable', (e) => {
-    recordedChunks.push(e.data);
-  });
-}
+function startRecording() {
+
+    navigator.mediaDevices.getUserMedia({ audio: true, video: false })
+    .then(stream => {
+    const options = {mimeType: 'audio/webm;codecs=opus'};
+    mediaRecorder = new MediaRecorder(stream, options);
+    mediaRecorder.start();
+    console.log('Recording...')
+    mediaRecorder.addEventListener('dataavailable', (e) => {
+        chunks.push(e.data);
+    })
+})}
+
+
+        
 
 function stopRecording() {
-  mediaRecorder.stop();
-  audioBlob = new Blob(recordedChunks);
-}
 
-function playRecording() {
-  const audioUrl = URL.createObjectURL(audioBlob);
-  const audio = new Audio(audioUrl);
-  audio.play();
-}
+    const audio = document.createElement('audio')
+    audio.controls = true
+    audio.src = audioURL
+    display.append(audio)
+            mediaRecorder.stop();
+            const blob = new Blob(chunks)
+            chunks = []
+            audioURL = window.URL.createObjectURL(blob)
+            document.querySelector('audio').src = audioURL
+
+
+                
+                //document.querySelector('audio').src = audioURL
+            
+
+          }
