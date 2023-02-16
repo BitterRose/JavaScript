@@ -87,7 +87,7 @@ function renderNotes() {
       });
   
       const createdElement = document.createElement('p');
-      createdElement.innerText = `Utworzono: ${note.created.toLocaleString()}`;
+      createdElement.innerText = `Utworzono: ${note.created.toLocaleString('pl-PL', {day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'})}`;
       createdElement.classList.add('created');
   
       const actionsElement = document.createElement('div');
