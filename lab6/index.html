@@ -5,8 +5,6 @@
     <style>
       canvas {
         border: 1px solid black;
-        width: 100vh;
-        height: 100vh;
       }
       button {
         margin: 10px;
@@ -16,10 +14,18 @@
     </style>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" width="1000" height="600"></canvas>
     <div>
       <button id="start">Start</button>
       <button id="reset">Reset</button>
+    </div>
+    <div>
+      <label for="ballscount">Ilość kulek</label>
+      <input type="range" id="ballscount" name="ballscount" min="0" max="1000" value="100">
+    </div>
+    <div>
+      <label for="linedistance">Odległość linii</label>
+      <input type="range" id="linedistance" name="linedistance" min="0" max="500" value="40">
     </div>
     <script src="script.js"></script>
   </body>

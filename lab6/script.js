@@ -1,10 +1,16 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const BALL_COUNT = 100;
+function updateVal(){
+  BALL_COUNT = document.getElementById("ballscount").value;
+  LINE_DISTANCE = document.getElementById("linedistance").value;
+}
+
+
+//const BALL_COUNT = ballscount;
 const BALL_RADIUS = 10;
 const BALL_SPEED = 3;
-const LINE_DISTANCE = 100;
+//const LINE_DISTANCE = linedistance;
 
 let balls = [];
 let animationFrame;
@@ -71,6 +77,7 @@ function init() {
 
 function start() {
   if (!animationFrame) {
+    updateVal();
     init();
   }
 }
@@ -84,3 +91,9 @@ function reset() {
 
 document.getElementById("start").addEventListener("click", start);
 document.getElementById("reset").addEventListener("click", reset);
+document.getElementById("ballscount").addEventListener("click", updateVal);
+document.getElementById("ballscount").addEventListener("click", reset);
+document.getElementById("ballscount").addEventListener("click", start);
+document.getElementById("linedistance").addEventListener("click", updateVal);
+document.getElementById("linedistance").addEventListener("click", reset);
+document.getElementById("linedistance").addEventListener("click", start);
