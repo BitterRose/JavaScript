@@ -51,13 +51,15 @@ function stopRecording() {
 
     const audio = document.createElement('audio')
     audio.controls = true
-    audio.src = audioURL
+
     display.append(audio)
             mediaRecorder.stop();
             const blob = new Blob(chunks)
             chunks = []
             audioURL = window.URL.createObjectURL(blob)
-            document.querySelector('audio').src = audioURL
+            //document.querySelector('audio').src = audioURL
+            audio.src = audioURL
+            
 
 
                 
