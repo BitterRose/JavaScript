@@ -9,7 +9,7 @@ function updateVal(){
 
 //const BALL_COUNT = ballscount;
 const BALL_RADIUS = 10;
-const BALL_SPEED = 3;
+const BALL_SPEED = 2;
 //const LINE_DISTANCE = linedistance;
 
 let balls = [];
