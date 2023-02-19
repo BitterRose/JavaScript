@@ -58,11 +58,20 @@ async function displayWeather(city) {
     icon.setAttribute('alt', data.weather[0].description);
     weatherCard.appendChild(icon);
 
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add('weather-card__remove-btn');
+    removeBtn.textContent = 'Usuń';
+    removeBtn.addEventListener('click', () => {
+      removeWeatherCard(data.name);
+    });
+    weatherCard.appendChild(removeBtn);
+
     weatherPanel.appendChild(weatherCard);
   } catch (error) {
     alert('Nie udało się pobrać informacji o pogodzie.');
   }
 }
+
 
 // Funkcja do usuwania karty z pogodą dla danego miasta
 function removeWeatherCard(city) {
