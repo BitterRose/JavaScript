@@ -1,28 +1,41 @@
-// funkcja, która dodaje dowolną ilość argumentów korzystając z asyncAdd()
-async function addNumbers(...numbers) {
-    let sum = 0;
-    for (const number of numbers) {
-      sum = await asyncAdd(sum, number);
-    }
-    return sum;
+//Asynchroniczna funkcja dodająca
+
+const asyncAdd = async (a,b) => {
+  if (typeof a !== 'number' || typeof b !== 'number') {
+    return Promise.reject('Argumenty muszą mieć typ number!')
   }
-  
-  // funkcja mierząca czas wykonania kodu
-  function measureTime(func, ...args) {
-    const start = Date.now();
-    const result = func(...args);
-    const end = Date.now();
-    const executionTime = end - start;
-    return { result, executionTime };
+  return new Promise((resolve, reject) => {
+    setTimeout(() =>{
+      resolve(a+b)
+    }, 100)
+  })
+}
+
+//Suma wszystkich elementów, iteracja po każdym z wykorzystaniem operatora rest
+const asyncAddMany = async (...args) => {
+  let result = 0;
+  for (let i = 0; i < args.length; i += 2) {
+    const a = args[i];
+    const b = args[i + 1];
+    result = await asyncAdd(a, b);
   }
-  
-  // przykładowe dane wejściowe
-  const data = Array.from({ length: 100 }, (_, i) => i + 1);
-  
-  // pomiar czasu wykonania funkcji dodającej
-  const { result, executionTime } = measureTime(addNumbers, ...data);
-  
+  return result;
+}
+
+//Funkcja mierząca czas wykonania
+const measureTime = async (fn, ...args) => {
+  const start = Date.now();
+  const result = await fn(...args);
+  const end = Date.now();
+  const time = end - start;
+  console.log(`Czas wykonania: ${time}ms`);
+  return result;
+}
+
+
+//Wynik i ilość operacji
+const arr = Array.from({length: 100}, () => Math.floor(Math.random() * 100));
+measureTime(asyncAddMany, ...arr).then(result => {
   console.log(`Wynik: ${result}`);
-  console.log(`Czas wykonania: ${executionTime} ms`);
-  console.log(`Ilość operacji asynchronicznych: ${data.length}`);
-  
+  console.log(`Ilość operacji asynchronicznych: ${arr.length / 2}`);
+});
